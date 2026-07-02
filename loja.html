@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Loja | OneUp</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+
+<body>
+  <header class="app-header">
+    <a class="logo" href="index.html">OneUp</a>
+
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="discover.html">Descobrir</a>
+      <a class="active" href="loja.html">Loja</a>
+      <a href="comunidade.html">Comunidade</a>
+      <span data-auth-area>
+        <a href="login.html">Entrar</a>
+      </span>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="section-title">
+      <p class="eyebrow">Loja gamer</p>
+      <h1>Personalize seu perfil com itens digitais.</h1>
+      <p>
+        Adicione avatares, skins, molduras e colecionáveis ao carrinho.
+        O checkout é simulado para fins de demonstração do projeto.
+      </p>
+    </section>
+
+    <section class="cart-layout">
+      <div>
+        <section class="toolbar">
+          <input class="search-input" id="storeSearch" type="text" placeholder="Buscar item..." />
+
+          <select class="filter-select" id="storeCategory">
+            <option value="all">Todas as categorias</option>
+            <option value="Avatar">Avatar</option>
+            <option value="Skin">Skin</option>
+            <option value="Colecionável">Colecionável</option>
+            <option value="Tema">Tema</option>
+            <option value="Emotes">Emotes</option>
+            <option value="Perfil">Perfil</option>
+          </select>
+        </section>
+
+        <section class="cards-grid" id="storeGrid"></section>
+      </div>
+
+      <aside class="cart-panel">
+        <h2>Carrinho</h2>
+
+        <div class="cart-items" id="cartItems"></div>
+
+        <div class="cart-total">
+          <span>Total</span>
+          <strong id="cartTotal">R$ 0,00</strong>
+        </div>
+
+        <div class="card-actions">
+          <button class="btn-secondary" type="button" onclick="handleClearCart()">Limpar</button>
+          <button class="btn-primary" type="button" onclick="handleCheckout()">Finalizar</button>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    &copy; 2025 OneUp — Loja simulada para projeto de portfólio.
+  </footer>
+
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/store.js"></script>
+
+  <script>
+    updateHeaderAuthArea();
+
+    const storeGrid = document.getElementById('storeGrid');
+    const cartItems = document.getElementById('cartItems');
+    const cartTotal = document.getElementById('cartTotal');
+    const storeSearch = document.getElementById('storeSearch');
+    const storeCategory = document.getElementById('storeCategory');
+
+    function renderStoreItems() {
+      const searchTerm = storeSearch.value.trim().toLowerCase();
+      const category = storeCategory.value;
+
+      const filteredItems = storeItems.filter((item) => {
+        const matchesSearch = item.name.toLowerCase().includes(searchTerm);
+        const matchesCategory = category === 'all' || item.category === category;
+
+        return matchesSearch && matchesCategory;
+      });
+
+      if (filteredItems.length === 0) {
+        storeGrid.innerHTML = '<div class="empty-state">Nenhum item encontrado.</div>';
+        return;
+      }
+
+      storeGrid.innerHTML = filteredItems.map((item) => `
+        <article class="store-card">
+          <div class="game-cover">${item.icon}</div>
+
+          <h3>${item.name}</h3>
+
+          <p class="game-meta">${item.category}</p>
+
+          <p>${item.description}</p>
+
+          <span class="price">${formatCurrency(item.price)}</span>
+
+          <div class="card-actions">
+            <button class="btn-primary" type="button" onclick="handleAddToCart('${item.id}')">
+              Adicionar
+            </button>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function renderCart() {
+      const items = getCartItems();
+
+      if (items.length === 0) {
+        cartItems.innerHTML = '<div class="empty-state">Seu carrinho está vazio.</div>';
+        cartTotal.textContent = formatCurrency(0);
+        return;
+      }
+
+      cartItems.innerHTML = items.map((item) => `
+        <div class="cart-item">
+          <div>
+            <strong>${item.name}</strong>
+            <span>${item.quantity}x • ${formatCurrency(item.subtotal)}</span>
+          </div>
+
+          <button class="btn-danger" type="button" onclick="handleRemoveFromCart('${item.id}')">
+            X
+          </button>
+        </div>
+      `).join('');
+
+      cartTotal.textContent = formatCurrency(getCartTotal());
+    }
+
+    function handleAddToCart(itemId) {
+      addToCart(itemId);
+      renderCart();
+    }
+
+    function handleRemoveFromCart(itemId) {
+      removeFromCart(itemId);
+      renderCart();
+    }
+
+    function handleClearCart() {
+      clearCart();
+      renderCart();
+    }
+
+    function handleCheckout() {
+      const items = getCartItems();
+
+      if (items.length === 0) {
+        alert('Adicione pelo menos um item ao carrinho.');
+        return;
+      }
+
+      alert('Compra simulada finalizada com sucesso!');
+      clearCart();
+      renderCart();
+    }
+
+    storeSearch.addEventListener('input', renderStoreItems);
+    storeCategory.addEventListener('change', renderStoreItems);
+
+    renderStoreItems();
+    renderCart();
+  </script>
+</body>
+</html>

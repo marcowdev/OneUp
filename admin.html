@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Admin | OneUp</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+
+<body>
+  <header class="app-header">
+    <a class="logo" href="index.html">OneUp</a>
+
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="discover.html">Descobrir</a>
+      <a href="loja.html">Loja</a>
+      <a href="comunidade.html">Comunidade</a>
+      <a class="active" href="admin.html">Admin</a>
+      <span data-auth-area></span>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="section-title">
+      <p class="eyebrow">Painel administrativo</p>
+      <h1>Gerencie o catálogo da OneUp.</h1>
+      <p>
+        Área administrativa simulada para adicionar jogos ao catálogo. Os dados são salvos localmente no navegador.
+      </p>
+    </section>
+
+    <section class="admin-layout">
+      <form class="admin-form" id="gameForm">
+        <h2>Novo jogo</h2>
+
+        <input id="gameTitle" type="text" placeholder="Nome do jogo" required />
+
+        <select id="gameGenre" required>
+          <option value="">Selecione o gênero</option>
+          <option value="RPG">RPG</option>
+          <option value="Aventura">Aventura</option>
+          <option value="Corrida">Corrida</option>
+          <option value="Roguelike">Roguelike</option>
+          <option value="Simulação">Simulação</option>
+          <option value="Ação">Ação</option>
+          <option value="Estratégia">Estratégia</option>
+          <option value="Terror">Terror</option>
+          <option value="Esporte">Esporte</option>
+        </select>
+
+        <input id="gamePlatform" type="text" placeholder="Plataformas. Ex: PC, Xbox, PlayStation" required />
+
+        <input id="gameIcon" type="text" placeholder="Ícone/emoji. Ex: 🎮" maxlength="4" />
+
+        <textarea id="gameDescription" placeholder="Descrição do jogo" required></textarea>
+
+        <button class="btn-primary" type="submit">Adicionar jogo</button>
+      </form>
+
+      <div>
+        <div class="section-title">
+          <h2>Jogos cadastrados</h2>
+          <p>Jogos padrão e jogos adicionados pelo administrador.</p>
+        </div>
+
+        <section class="admin-list" id="adminGamesList"></section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    &copy; 2025 OneUp — Painel administrativo simulado.
+  </footer>
+
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/games.js"></script>
+
+  <script>
+    const adminUser = protectAdminPage();
+
+    updateHeaderAuthArea();
+
+    const gameForm = document.getElementById('gameForm');
+    const adminGamesList = document.getElementById('adminGamesList');
+
+    function renderAdminGames() {
+      const allGames = getAllGames();
+
+      adminGamesList.innerHTML = allGames.map((game) => {
+        const isCustom = Boolean(game.custom);
+
+        return `
+          <article class="admin-item">
+            <div class="admin-icon">${game.icon}</div>
+
+            <div>
+              <span class="badge-admin">${isCustom ? 'Criado pelo ADM' : 'Jogo padrão'}</span>
+              <h3>${game.title}</h3>
+              <p>${game.genre} • ${game.platform}</p>
+              <p>${game.description}</p>
+            </div>
+
+            ${
+              isCustom
+                ? `<button class="btn-danger" type="button" onclick="handleDeleteGame('${game.id}')">Excluir</button>`
+                : `<button class="btn-secondary" type="button" disabled>Padrão</button>`
+            }
+          </article>
+        `;
+      }).join('');
+    }
+
+    function handleDeleteGame(gameId) {
+      const confirmDelete = confirm('Deseja excluir este jogo do catálogo?');
+
+      if (!confirmDelete) return;
+
+      deleteCustomGame(gameId);
+      renderAdminGames();
+    }
+
+    gameForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      const title = document.getElementById('gameTitle').value.trim();
+      const genre = document.getElementById('gameGenre').value;
+      const platform = document.getElementById('gamePlatform').value.trim();
+      const icon = document.getElementById('gameIcon').value.trim() || '🎮';
+      const description = document.getElementById('gameDescription').value.trim();
+
+      if (!title || !genre || !platform || !description) {
+        alert('Preencha todos os campos obrigatórios.');
+        return;
+      }
+
+      addCustomGame({
+        title,
+        genre,
+        platform,
+        icon,
+        description,
+      });
+
+      gameForm.reset();
+      renderAdminGames();
+
+      alert('Jogo adicionado ao catálogo.');
+    });
+
+    renderAdminGames();
+  </script>
+</body>
+</html>

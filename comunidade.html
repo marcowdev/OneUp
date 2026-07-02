@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Comunidade | OneUp</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+
+<body>
+  <header class="app-header">
+    <a class="logo" href="index.html">OneUp</a>
+
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="discover.html">Descobrir</a>
+      <a href="loja.html">Loja</a>
+      <a class="active" href="comunidade.html">Comunidade</a>
+      <span data-auth-area>
+        <a href="login.html">Entrar</a>
+      </span>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="section-title">
+      <p class="eyebrow">Comunidade</p>
+      <h1>Compartilhe opiniões com outros jogadores.</h1>
+      <p>
+        Publique recomendações, dúvidas e experiências. As postagens são salvas localmente
+        no navegador para simular uma comunidade funcional.
+      </p>
+    </section>
+
+    <section class="post-form" id="postFormArea"></section>
+
+    <section class="section-title">
+      <h2>Publicações recentes</h2>
+      <p>Veja o que a comunidade está comentando.</p>
+    </section>
+
+    <section class="posts-list" id="postsList"></section>
+  </main>
+
+  <footer class="app-footer">
+    &copy; 2025 OneUp — Comunidade simulada com JavaScript e localStorage.
+  </footer>
+
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/community.js"></script>
+
+  <script>
+    updateHeaderAuthArea();
+
+    const postFormArea = document.getElementById('postFormArea');
+    const postsList = document.getElementById('postsList');
+
+    function renderPostForm() {
+      const user = getCurrentUser();
+
+      if (!user) {
+        postFormArea.innerHTML = `
+          <div class="empty-state">
+            Faça login para publicar na comunidade.
+            <br><br>
+            <a class="btn-primary" href="login.html">Entrar ou criar conta</a>
+          </div>
+        `;
+        return;
+      }
+
+      postFormArea.innerHTML = `
+        <h2>Criar publicação</h2>
+
+        <textarea id="postContent" placeholder="O que você quer compartilhar com a comunidade?"></textarea>
+
+        <button class="btn-primary" type="button" onclick="handleCreatePost()">
+          Publicar
+        </button>
+      `;
+    }
+
+    function renderPosts() {
+      const posts = getPosts();
+
+      postsList.innerHTML = posts.map((post) => `
+        <article class="post-card">
+          <header>
+            <div>
+              <strong>${post.author}</strong>
+              <time>${formatDate(post.createdAt)}</time>
+            </div>
+          </header>
+
+          <p>${post.content}</p>
+
+          <div class="like-row">
+            <span>${post.likes} curtidas</span>
+
+            <button class="btn-secondary" type="button" onclick="handleLikePost('${post.id}')">
+              Curtir
+            </button>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function handleCreatePost() {
+      const user = getCurrentUser();
+      const textarea = document.getElementById('postContent');
+      const content = textarea.value.trim();
+
+      if (!user) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      if (!content) {
+        alert('Digite algo antes de publicar.');
+        return;
+      }
+
+      createPost(user.name, content);
+      textarea.value = '';
+      renderPosts();
+    }
+
+    function handleLikePost(postId) {
+      likePost(postId);
+      renderPosts();
+    }
+
+    renderPostForm();
+    renderPosts();
+  </script>
+</body>
+</html>

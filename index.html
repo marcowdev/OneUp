@@ -3,155 +3,82 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>OneUp | Home</title>
 
-  <!-- Fonte moderna -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { height: 100%; }
-
-    body {
-      font-family: 'Poppins', sans-serif;
-      color: #fff;
-      background: url('assets/images/city_background.jpg') center/cover no-repeat;
-      display: flex;
-      flex-direction: column;
-    }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 40px;
-      background: rgba(0,0,0,0.5);
-    }
-
-    header .logo {
-      font-size: 1.8rem;
-      font-weight: 700;
-      background: linear-gradient(90deg, #3b82f6, #60a5fa);
-      -webkit-background-clip: text;
-      color: transparent;
-    }
-
-    header .nav-links a {
-      margin-left: 20px;
-      color: #fff;
-      text-decoration: none;
-      font-weight: 600;
-      transition: opacity 0.2s;
-    }
-    header .nav-links a:hover { opacity: 0.7; }
-
-    .hero {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 0 20px;
-      background: rgba(0,0,0,0.4);
-    }
-    .hero h1 {
-      font-size: 2.8rem;
-      line-height: 1.2;
-      margin-bottom: 1rem;
-      font-weight: 600;
-    }
-    .hero h2 {
-      font-size: 1.5rem;
-      margin-bottom: 2rem;
-      font-weight: 400;
-    }
-    .hero .btn-primary {
-      padding: 15px 30px;
-      background: linear-gradient(90deg, #3b82f6, #60a5fa);
-      border: none;
-      border-radius: 30px;
-      color: #fff;
-      font-size: 1.1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-    .hero .btn-primary:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 20px rgba(96,165,250,0.6);
-    }
-
-    .features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
-      gap: 20px;
-      padding: 40px;
-      background: rgba(0,0,0,0.3);
-    }
-    .feature-card {
-      background: rgba(30,41,59,0.8);
-      padding: 20px;
-      border-radius: 15px;
-      text-align: center;
-      transition: transform 0.3s;
-      border: 1px solid rgba(96,165,250,0.4);
-    }
-    .feature-card:hover { transform: translateY(-10px); }
-    .feature-card h3 { margin-bottom: 10px; font-size: 1.2rem; }
-    .feature-card p { font-size: 0.95rem; color: #ccc; }
-
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: rgba(0,0,0,0.6);
-      font-size: 0.9rem;
-    }
-
-    @media (max-width: 768px) {
-      header { flex-direction: column; padding: 20px; }
-      .hero h1 { font-size: 2rem; }
-      .hero h2 { font-size: 1.2rem; }
-      .features { padding: 20px; gap: 10px; }
-    }
-  </style>
+  <link rel="stylesheet" href="assets/css/style.css" />
 </head>
+
 <body>
-  <header>
-    <div class="logo">OneUp</div>
+  <header class="app-header">
+    <a class="logo" href="index.html">OneUp</a>
+
     <nav class="nav-links">
+      <a class="active" href="index.html">Home</a>
       <a href="discover.html">Descobrir</a>
       <a href="loja.html">Loja</a>
       <a href="comunidade.html">Comunidade</a>
-      <a href="login.html">Entrar</a>
+      <span data-auth-area>
+        <a href="login.html">Entrar</a>
+      </span>
     </nav>
   </header>
 
-  <section class="hero">
-    <h1>Avalie os jogos que você jogou</h1>
-    <h2>Salve seus favoritos e compartilhe com amigos</h2>
-    <button class="btn-primary" onclick="location.href='discover.html'">Começar Agora</button>
-  </section>
+  <main>
+    <section class="hero-home">
+      <div class="hero-content">
+        <p class="eyebrow">Sua jornada gamer em um só lugar</p>
 
-  <section class="features">
-    <div class="feature-card">
-      <h3>Ranking Global</h3>
-      <p>Compare suas conquistas com jogadores do mundo.</p>
-    </div>
-    <div class="feature-card">
-      <h3>Loja Integrada</h3>
-      <p>Adquira skins, itens colecionáveis e muito mais.</p>
-    </div>
-    <div class="feature-card">
-      <h3>Perfil Gamer</h3>
-      <p>Personalize seu avatar e conquistas.</p>
-    </div>
-    <div class="feature-card">
-      <h3>Comunidade</h3>
-      <p>Participe de chats e fóruns exclusivos.</p>
-    </div>
-  </section>
+        <h1>Avalie, descubra e salve seus jogos favoritos.</h1>
 
-  <footer>&copy; 2025 OneUp - Todos os direitos reservados</footer>
+        <h2>
+          OneUp é uma plataforma fictícia para jogadores acompanharem jogos, avaliações,
+          favoritos, loja gamer e comunidade.
+        </h2>
+
+        <div class="hero-actions">
+          <a class="btn-primary" href="discover.html">Começar agora</a>
+          <a class="btn-secondary" href="login.html">Criar conta</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="page">
+      <div class="features">
+        <article class="feature-card">
+          <h3>Ranking Global</h3>
+          <p>Compare jogos populares e acompanhe avaliações da comunidade.</p>
+        </article>
+
+        <article class="feature-card">
+          <h3>Loja Integrada</h3>
+          <p>Adicione skins, avatares e itens colecionáveis ao carrinho.</p>
+        </article>
+
+        <article class="feature-card">
+          <h3>Perfil Gamer</h3>
+          <p>Visualize seus jogos favoritos e suas avaliações salvas.</p>
+        </article>
+
+        <article class="feature-card">
+          <h3>Comunidade</h3>
+          <p>Publique comentários e interaja em uma comunidade gamer simulada.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    &copy; 2025 OneUp — Projeto de portfólio desenvolvido em HTML, CSS e JavaScript.
+  </footer>
+
+  <script src="assets/js/auth.js"></script>
+  <script>
+    updateHeaderAuthArea();
+  </script>
 </body>
 </html>

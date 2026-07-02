@@ -2,250 +2,165 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Login | OneUp</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Poppins', sans-serif;
-      background-color: #0f172a;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      overflow: hidden;
-      color: white;
-    }
-
-    .container {
-      position: relative;
-      width: 95%;
-      max-width: 1000px;
-      height: 600px;
-      border-radius: 20px;
-      overflow: hidden;
-      display: flex;
-      background: linear-gradient(to bottom right, #051937, #004d7a, #00c6ff);
-      box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
-    }
-
-    .form-section {
-      width: 50%;
-      padding: 50px 40px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      background-color: #1e293b;
-      transition: transform 0.8s ease;
-      z-index: 2;
-    }
-
-    .form-section h2 {
-      font-size: 2rem;
-      margin-bottom: 30px;
-      color: #ffffff;
-    }
-
-    .form-section input {
-      padding: 12px;
-      margin-bottom: 20px;
-      border: none;
-      border-radius: 10px;
-      background-color: #334155;
-      color: white;
-      font-size: 1rem;
-    }
-
-    .form-section button {
-      padding: 12px;
-      background: linear-gradient(90deg, #3b82f6, #60a5fa);
-      border: none;
-      border-radius: 10px;
-      color: white;
-      font-weight: bold;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    .form-section button:hover {
-      background: linear-gradient(90deg, #60a5fa, #3b82f6);
-    }
-
-    .form-section .options {
-      margin-top: 10px;
-      font-size: 0.9rem;
-      text-align: right;
-    }
-
-    .form-section .options a {
-      color: #60a5fa;
-      text-decoration: none;
-      cursor: pointer;
-    }
-
-    .form-section .options a:hover {
-      text-decoration: underline;
-    }
-
-    .image-section {
-      width: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-    }
-
-    .image-section img {
-      width: 300px;
-      animation: slideRight 1s ease-out, floatUp 4s ease-in-out infinite;
-    }
-
-    .register-section {
-      position: absolute;
-      top: 0;
-      left: 100%;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      background: linear-gradient(to bottom right, #004d7a, #2563eb, #60a5fa);
-      transition: left 0.8s ease;
-      z-index: 3;
-    }
-
-    .register-section.active {
-      left: 0;
-    }
-
-    .register-form {
-      width: 50%;
-      padding: 50px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .register-form h2 {
-      font-size: 2rem;
-      margin-bottom: 30px;
-      color: #ffffff;
-    }
-
-    .register-form input,
-    .register-form button {
-      padding: 12px;
-      margin-bottom: 20px;
-      border: none;
-      border-radius: 10px;
-      font-size: 1rem;
-    }
-
-    .register-form input {
-      background: #334155;
-      color: white;
-    }
-
-    .register-form button {
-      background: linear-gradient(90deg, #60a5fa, #3b82f6);
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .register-image {
-      width: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .register-image img {
-      width: 300px;
-      animation: slideLeft 1s ease-out, floatUp 4s ease-in-out infinite;
-    }
-
-    @keyframes floatUp {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-      100% { transform: translateY(0); }
-    }
-
-    @keyframes slideLeft {
-      from { transform: translateX(100px); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
-    }
-
-    @keyframes slideRight {
-      from { transform: translateX(-100px); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
-    }
-
-    @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-        height: auto;
-      }
-      .form-section,
-      .image-section,
-      .register-form,
-      .register-image {
-        width: 100%;
-      }
-      .register-section {
-        flex-direction: column;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 
-<body>
-  <div class="container">
-    <div class="form-section">
-      <h2>Fazer Login</h2>
-      <input type="text" placeholder="Usuário" required />
-      <input type="password" placeholder="Senha" required />
-      <button>Entrar</button>
-      <div class="options">
-        <p><a href="#" onclick="showRegister()">Não tem conta? Registre-se</a></p>
-      </div>
-    </div>
+<body class="auth-page">
+  <main class="auth-container">
+    <section class="auth-form" id="loginBox">
+      <h1>Entrar na OneUp</h1>
+      <p>Acesse seu perfil gamer, favoritos e avaliações salvas.</p>
 
-    <div class="image-section">
-      <img src="assets/images/personagem.png" alt="Personagem Gamer">
-    </div>
-
-    <div class="register-section" id="registerSection">
-      <div class="register-form">
-        <h2>Crie sua conta</h2>
-        <input type="text" placeholder="Nome de Usuário" required />
-        <input type="email" placeholder="Email" required />
-        <input type="password" placeholder="Senha" required />
-        <button>Registrar</button>
-        <div class="options">
-          <p><a href="login.html" onclick="hideRegister()">Já tem conta? Faça login</a></p>
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="loginEmail">E-mail</label>
+          <input id="loginEmail" type="email" placeholder="seuemail@email.com" required />
         </div>
-      </div>
-      <div class="register-image">
-        <img src="assets/images/personagem2.png" alt="Nova Personagem">
-      </div>
-    </div>
-  </div>
 
+        <div class="form-group">
+          <label for="loginPassword">Senha</label>
+          <input id="loginPassword" type="password" placeholder="Sua senha" required />
+        </div>
+
+        <div class="auth-message" id="loginMessage"></div>
+
+        <button class="btn-primary" type="submit">Entrar</button>
+      </form>
+
+      <div class="auth-switch">
+        Não tem conta?
+        <button type="button" id="showRegisterButton">Criar conta</button>
+      </div>
+
+      <div class="auth-switch">
+        <a href="index.html">← Voltar para Home</a>
+      </div>
+    </section>
+
+    <section class="auth-form hidden" id="registerBox">
+      <h1>Criar conta</h1>
+      <p>Crie um perfil gamer para salvar favoritos e avaliações.</p>
+
+      <form id="registerForm">
+        <div class="form-group">
+          <label for="registerName">Nome de usuário</label>
+          <input id="registerName" type="text" placeholder="Ex: MarcosGamer" required />
+        </div>
+
+        <div class="form-group">
+          <label for="registerEmail">E-mail</label>
+          <input id="registerEmail" type="email" placeholder="seuemail@email.com" required />
+        </div>
+
+        <div class="form-group">
+          <label for="registerPassword">Senha</label>
+          <input id="registerPassword" type="password" placeholder="Mínimo 4 caracteres" required />
+        </div>
+
+        <div class="auth-message" id="registerMessage"></div>
+
+        <button class="btn-primary" type="submit">Registrar</button>
+      </form>
+
+      <div class="auth-switch">
+        Já tem conta?
+        <button type="button" id="showLoginButton">Fazer login</button>
+      </div>
+    </section>
+
+    <section class="auth-visual">
+      <img id="authImage" src="assets/images/personagem.png" alt="Personagem Gamer" />
+    </section>
+  </main>
+
+  <script src="assets/js/auth.js"></script>
   <script>
-    function showRegister() {
-      document.getElementById('registerSection').classList.add('active');
+    const loginBox = document.getElementById('loginBox');
+    const registerBox = document.getElementById('registerBox');
+    const authImage = document.getElementById('authImage');
+
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+
+    const loginMessage = document.getElementById('loginMessage');
+    const registerMessage = document.getElementById('registerMessage');
+
+    document.getElementById('showRegisterButton').addEventListener('click', () => {
+      loginBox.classList.add('hidden');
+      registerBox.classList.remove('hidden');
+      authImage.src = 'assets/images/personagem2.png';
+    });
+
+    document.getElementById('showLoginButton').addEventListener('click', () => {
+      registerBox.classList.add('hidden');
+      loginBox.classList.remove('hidden');
+      authImage.src = 'assets/images/personagem.png';
+    });
+
+    registerForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      const name = document.getElementById('registerName').value.trim();
+      const email = document.getElementById('registerEmail').value.trim().toLowerCase();
+      const password = document.getElementById('registerPassword').value.trim();
+
+      if (password.length < 4) {
+        registerMessage.textContent = 'A senha precisa ter pelo menos 4 caracteres.';
+        registerMessage.className = 'auth-message error';
+        return;
+      }
+
+      const result = registerUser(name, email, password);
+
+      registerMessage.textContent = result.message;
+      registerMessage.className = result.success
+        ? 'auth-message success'
+        : 'auth-message error';
+
+      if (result.success) {
+        registerForm.reset();
+
+        setTimeout(() => {
+          registerBox.classList.add('hidden');
+          loginBox.classList.remove('hidden');
+          authImage.src = 'assets/images/personagem.png';
+          loginMessage.textContent = 'Conta criada. Faça login para continuar.';
+          loginMessage.className = 'auth-message success';
+        }, 800);
+      }
+    });
+
+    loginForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+      const password = document.getElementById('loginPassword').value.trim();
+
+      const result = loginUser(email, password);
+
+      loginMessage.textContent = result.message;
+      loginMessage.className = result.success
+        ? 'auth-message success'
+        : 'auth-message error';
+
+      if (result.success) {
+  setTimeout(() => {
+    if (result.user.role === 'admin') {
+      window.location.href = 'admin.html';
+    } else {
+      window.location.href = 'perfil.html';
     }
-    function hideRegister() {
-      document.getElementById('registerSection').classList.remove('active');
-    }
+  }, 500);
+}
+    });
   </script>
 </body>
 </html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Descobrir | OneUp</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+
+<body>
+  <header class="app-header">
+    <a class="logo" href="index.html">OneUp</a>
+
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a class="active" href="discover.html">Descobrir</a>
+      <a href="loja.html">Loja</a>
+      <a href="comunidade.html">Comunidade</a>
+      <span data-auth-area>
+        <a href="login.html">Entrar</a>
+      </span>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="section-title">
+      <p class="eyebrow">Catálogo gamer</p>
+      <h1>Descubra jogos para avaliar e salvar.</h1>
+      <p>Busque por nome, filtre por gênero, favorite seus jogos e registre avaliações.</p>
+    </section>
+
+    <section class="toolbar">
+      <input class="search-input" id="searchInput" type="text" placeholder="Buscar jogo..." />
+
+      <select class="filter-select" id="genreFilter">
+        <option value="all">Todos os gêneros</option>
+        <option value="RPG">RPG</option>
+        <option value="Aventura">Aventura</option>
+        <option value="Corrida">Corrida</option>
+        <option value="Roguelike">Roguelike</option>
+        <option value="Simulação">Simulação</option>
+        <option value="Ação">Ação</option>
+      </select>
+    </section>
+
+    <section class="cards-grid" id="gamesGrid"></section>
+  </main>
+
+  <footer class="app-footer">
+    &copy; 2025 OneUp — Descubra, avalie e salve seus jogos favoritos.
+  </footer>
+
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/games.js"></script>
+
+  <script>
+    updateHeaderAuthArea();
+
+    const gamesGrid = document.getElementById('gamesGrid');
+    const searchInput = document.getElementById('searchInput');
+    const genreFilter = document.getElementById('genreFilter');
+
+    function renderStars(gameId) {
+      const currentRating = getRating(gameId);
+
+      return Array.from({ length: 5 }, (_, index) => {
+        const value = index + 1;
+        const activeClass = value <= currentRating ? 'active' : '';
+
+        return `
+          <button class="star ${activeClass}" type="button" onclick="rateGame('${gameId}', ${value})">
+            ★
+          </button>
+        `;
+      }).join('');
+    }
+
+    function renderGames() {
+      const searchTerm = searchInput.value.trim().toLowerCase();
+      const selectedGenre = genreFilter.value;
+
+     const filteredGames = getAllGames().filter((game) => {
+        const matchesSearch = game.title.toLowerCase().includes(searchTerm);
+        const matchesGenre = selectedGenre === 'all' || game.genre === selectedGenre;
+
+        return matchesSearch && matchesGenre;
+      });
+
+      if (filteredGames.length === 0) {
+        gamesGrid.innerHTML = '<div class="empty-state">Nenhum jogo encontrado.</div>';
+        return;
+      }
+
+      gamesGrid.innerHTML = filteredGames.map((game) => {
+        const favoriteLabel = isFavorite(game.id) ? 'Remover favorito' : 'Favoritar';
+
+        return `
+          <article class="game-card">
+            <div class="game-cover">${game.icon}</div>
+
+            <h3>${game.title}</h3>
+
+            <p class="game-meta">${game.genre} • ${game.platform}</p>
+
+            <p>${game.description}</p>
+
+            <div class="rating-row">
+              <span>Avaliação</span>
+              <div class="stars">${renderStars(game.id)}</div>
+            </div>
+
+            <div class="card-actions">
+              <button class="btn-secondary" type="button" onclick="favoriteGame('${game.id}')">
+                ${favoriteLabel}
+              </button>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function favoriteGame(gameId) {
+      toggleFavorite(gameId);
+      renderGames();
+    }
+
+    function rateGame(gameId, rating) {
+      saveRating(gameId, rating);
+      renderGames();
+    }
+
+    searchInput.addEventListener('input', renderGames);
+    genreFilter.addEventListener('change', renderGames);
+
+    renderGames();
+  </script>
+</body>
+</html>
