@@ -1,5 +1,11 @@
 # OneUp
 
+Projeto gamer fictício desenvolvido em **HTML, CSS e JavaScript puro**.
+
+## 🔗 Acesse o projeto
+
+- Deploy: https://one-up-mocha.vercel.app/
+- Repositório: COLE_AQUI_O_LINK_DO_GITHUB
 OneUp é uma plataforma gamer fictícia desenvolvida como projeto de portfólio utilizando **HTML, CSS e JavaScript puro**.
 
 O objetivo do projeto é simular uma aplicação onde usuários podem descobrir jogos, favoritar títulos, avaliar experiências, acessar uma loja gamer simulada, interagir em uma comunidade e utilizar um painel administrativo para gerenciar o catálogo.
